@@ -1,0 +1,26 @@
+# POST method to trigger pipeline
+
+POST http://127.0.0.1:5000/run-pipeline
+Content-Type: application/json
+
+{
+  "demographic_file": "Block_4_Demographic.tsv",
+  "expenditure_file": "Block_8_Expenditure.tsv",
+  "action": "all",
+  "aggregation_parameters": [
+    {
+      "groupby": ["HHID", "State"],
+      "agg_params": {
+        "Age": "mean",
+        "Value_of_Consumption_Last_30_Day": "sum"
+      }
+    },
+     {
+      "groupby": ["Sex", "General_Education","Status_of_Current_Attendance"],
+      "agg_params": {
+        "Age": "mean",
+        "Person_Serial_No": "count"
+      }
+    }
+  ]
+}

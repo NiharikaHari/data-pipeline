@@ -1,0 +1,48 @@
+
+# Get cleaned data
+
+GET http://127.0.0.1:5000/data/cleaned
+
+###
+
+# Get merged data
+
+GET http://127.0.0.1:5000/data/merged
+
+###
+
+# List aggregated data files
+
+
+GET http://127.0.0.1:5000/data/aggregated
+
+###
+
+# Get aggregated data by index
+
+GET http://127.0.0.1:5000/data/aggregated/1
+
+###
+
+# Get aggregated data by name
+
+GET http://127.0.0.1:5000/data/aggregated/HHID-State-Age-Value_of_Consumption_Last_30_Day.tsv
+
+###
+
+# List chart names
+
+GET http://127.0.0.1:5000/data/charts
+
+###
+
+# Get chart by name
+GET http://127.0.0.1:5000/data/charts/grouped.png
+
+###
+
+# Get chart by index
+GET http://127.0.0.1:5000/data/charts/1
+
+
+
