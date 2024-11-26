@@ -8,6 +8,11 @@ from utils.file_utils import load_cleaned_data, load_merged_data, load_data
 
 app = Flask(__name__)
 
+# Set environment variables from config.py
+os.environ["FLASK_RUN_HOST"] = config.FLASK_RUN_HOST
+os.environ["FLASK_RUN_PORT"] = str(config.FLASK_RUN_PORT)
+os.environ["FLASK_DEBUG"] = str(config.FLASK_DEBUG)
+
 # Endpoint to trigger the pipeline
 
 

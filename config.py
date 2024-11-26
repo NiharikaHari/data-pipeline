@@ -42,6 +42,6 @@ LOGS_DIR = os.path.join(BASE_DIR, "logs")
 PIPELINE_LOG_PATH = os.path.join(LOGS_DIR, "pipeline.log")
 
 # API settings
-API_HOST = "127.0.0.1"
-API_PORT = 5000
-DEBUG = True
+FLASK_RUN_HOST = "127.0.0.1"
+FLASK_RUN_PORT = 5000
+FLASK_DEBUG = True
