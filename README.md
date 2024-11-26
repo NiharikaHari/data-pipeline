@@ -108,6 +108,23 @@ FLASK_DEBUG = True
 > [!NOTE]
 > Flask server will need to be restarted with `flask run` command to reflect the change in these settings.
 
+### Configure File Names
+
+1. Place your expenditure and demographic raw data files in the folder `/data/raw`.
+2. You may update `config.py` file with the appropriate filenames in the fields below:
+
+```python
+# File names
+RAW_DEMOGRAPHICS_FILE = "Block_4_Demographic particulars of household members_sample.tsv"
+RAW_EXPENDITURE_FILE = "Block_8_Household consumer expenditure_sample.tsv"
+CLEANED_DEMOGRAPHICS_FILE = "demographic_cleaned.tsv"
+CLEANED_EXPENDITURE_FILE = "expenditure_cleaned.tsv"
+MERGED_JSON_FILE = "merged_data.json"
+MERGED_TSV_FILE = "merged_data.tsv"
+```
+
+3. Alternatively you can specify the raw demographic and expenditure file names while running the pipeline.
+
 Once the flask app is running, you can use the API with tools like **Postman**, **cURL**, or Python scripts. Below are examples for each endpoint:
 
 ### **1. Run Pipeline**
