@@ -73,29 +73,13 @@ source venv/bin/activate
 ```
 
 **3. Install Dependencies**
-
 Install all required packages from requirements.txt:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-**4. Configure Filenames**
-
-Update config.py with appropriate file names of your input and output data. Example:
-
-```python
-# File names
-RAW_DEMOGRAPHICS_FILE = "Block_4_Demographic particulars of household members_sample.tsv"
-RAW_EXPENDITURE_FILE = "Block_8_Household consumer expenditure_sample.tsv"
-CLEANED_DEMOGRAPHICS_FILE = "demographic_cleaned.tsv"
-CLEANED_EXPENDITURE_FILE = "expenditure_cleaned.tsv"
-MERGED_JSON_FILE = "merged_data.json"
-MERGED_TSV_FILE = "merged_data.tsv"
-```
-
-**5. Run the Application**
-
+**4. Run the Application**
 Start the flask server:
 
 ```bash
@@ -116,12 +100,13 @@ This can be modified by updating the below fields in config.py:
 
 ```python
 # API settings
-API_HOST = "127.0.0.1"
-API_PORT = 5000
-DEBUG = True
+FLASK_RUN_HOST = "127.0.0.1"
+FLASK_RUN_PORT = 5000
+FLASK_DEBUG = True
 ```
 
-### **Endpoints**
+> [!NOTE]
+> Flask server will need to be restarted with `flask run` command to reflect the change in these settings.
 
 Once the flask app is running, you can use the API with tools like **Postman**, **cURL**, or Python scripts. Below are examples for each endpoint:
 
@@ -130,18 +115,71 @@ Once the flask app is running, you can use the API with tools like **Postman**, 
 **POST** `/run-pipeline`
 Trigger the data processing pipeline.
 
+> [!IMPORTANT]
+> Ensure that the raw data files (demographic and expenditure) are placed in folder `/data/raw`.
+
 #### Request Parameters
 
-| Field                    | Type     | Required | Description                                                                                                                                                                         | Default Value                     |
-| ------------------------ | -------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
-| `demographic_file`       | `string` | Optional | Name of the demographic data file.                                                                                                                                                  | `config.RAW_DEMOGRAPHICS_FILE`    |
-| `expenditure_file`       | `string` | Optional | Name of the expenditure data file.                                                                                                                                                  | `config.RAW_EXPENDITURE_FILE`     |
-| `action`                 | `string` | Optional | Action to perform. Options are: `all`, `clean`, `merge`, `aggregate`, `visualize`<br>**Note**: If action is set to `all`, all stages of the pipeline will be executed sequentially. | `all`                             |
-| `aggregation_parameters` | `list`   | Optional | List of aggregation instructions.<br>                                                                                                                                               | A default list of 5 aggregations. |
+| Field                    | Type     | Required | Description                                                                           | Default Value                     |
+| ------------------------ | -------- | -------- | ------------------------------------------------------------------------------------- | --------------------------------- |
+| `demographic_file`       | `string` | Optional | Name of the demographic data file.                                                    | `config.RAW_DEMOGRAPHICS_FILE`    |
+| `expenditure_file`       | `string` | Optional | Name of the expenditure data file.                                                    | `config.RAW_EXPENDITURE_FILE`     |
+| `action`                 | `string` | Optional | Action to perform. Options are: `all`, `clean`, `merge`, `aggregate`, `visualize`<br> | `all`                             |
+| `aggregation_parameters` | `list`   | Optional | List of aggregation instructions.<br>                                                 | A default list of 5 aggregations. |
+
+> [!NOTE]
+>
+> 1. If action is set to `all`, all stages of the pipeline will be executed sequentially.
+> 2. You can also mention the filenames of raw data in config.py file in the variables `RAW_DEMOGRAPHICS_FILE` and `RAW_EXPENDITURE_FILE`
+
+<h4 id="aggregation-parameters">Aggregation Parameters</h4>
+
+The field `aggregation_parameters` is expected to be a _list of dictionaries_, where each dictionary has the below key-value pairs:
+
+| Key          | Type   | Required | Description                                                                                                                          |
+| ------------ | ------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `groupby`    | `list` | Required | List of columns names along which the data will be grouped.<br>e.g. - `'groupby': ['State', 'MGNREG_jobcard']`                       |
+| `agg_params` | `dict` | Required | Dictionary with key-value pairs as: "column_name":"aggregation_function"<br>e.g. - `'agg_params': {"Person_Serial_No": "count"}`<br> |
+
+> [!NOTE]
+> The aggregation function can also be a lambda function such as -
+> `'agg_params': {"Age": lambda x: x[x >= 18].count()}`
+
+**The default value of `aggregation_parameters` is below:**
+
+```python
+[
+        {
+            # Average age and number of individuals grouped by state
+            'groupby': ['State'],
+            'agg_params': {"Age": "mean", "Person_Serial_No": "count"}
+        },
+        {
+            # Average age and number of individuals grouped by Sex, Education Level, and Status of Current Attendance
+            'groupby': ['Sex', 'General_Education', 'Status_of_Current_Attendance'],
+            'agg_params': {"Age": "mean", "Person_Serial_No": "count"}
+        },
+        {
+            # Average expenditure in last 30 days grouped by state and District
+            'groupby': ['State', 'District_Code'],
+            'agg_params': {"Value_of_Consumption_Last_30_Day": "mean"}
+        },
+        {
+            # Count of people registered in MGNREG grouped by State
+            'groupby': ['State', 'MGNREG_jobcard'],
+            'agg_params': {"Person_Serial_No": "count"}
+        },
+        {
+            # Count of unmarried people who are adults grouped by State, Distric, HHID
+            'groupby': ['State', 'District_Code', 'HHID', 'Marital_Status'],
+            'agg_params': {"Age": lambda x: x[x >= 18].count()}
+        }
+    ]
+```
 
 #### Examples
 
-**Using Postman or VSCode REST Client**
+**Using Postman or VSCode REST Client Extension**
 
 ```json
 # POST method to trigger pipeline
@@ -170,12 +208,24 @@ curl -X POST http://127.0.0.1:5000/run-pipeline \
 }'
 ```
 
+#### Output
+
+Once the pipeline is executed, the results can be found at below locations:
+
+1. Cleaned data - `/data/cleaned`
+2. Merged data - `/data/merged`
+3. Aggregated data - `/data/aggregated`
+4. Visualizations - `/data/charts`
+
+These results can also be obtained via GET requests as explained below.
+
 ### **2. Fetch Cleaned Data**
 
 **GET** `/data/cleaned`
 Retrieve cleaned demographic and expenditure data.
 
-> **Note:** The cleaned data is also available at the project folder location `<root>/data/cleaned`
+> [!Note]
+> The cleaned data is also available at the project folder location `<root>/data/cleaned`
 
 ```bash
 curl -X GET http://127.0.0.1:5000/data/cleaned
@@ -186,7 +236,8 @@ curl -X GET http://127.0.0.1:5000/data/cleaned
 **GET** `/data/merged
 Retrieve the merged data.
 
-> **Note:** The merged data is also available at the project folder location `<root>/data/merged`
+> [!NOTE]
+> The merged data is also available at the project folder location `<root>/data/merged`
 
 ```bash
 curl -X GET http://127.0.0.1:5000/data/merged
@@ -197,7 +248,8 @@ curl -X GET http://127.0.0.1:5000/data/merged
 **GET** `/data/aggregated
 Retrieve the list of aggregated data files
 
-> **Note:** The aggregated data is also available at the project folder location `<root>/data/aggregated`
+> [!NOTE]
+> The aggregated data is also available at the project folder location `<root>/data/aggregated`
 
 ```bash
 curl -X GET http://127.0.0.1:5000/data/aggregated
@@ -208,7 +260,8 @@ curl -X GET http://127.0.0.1:5000/data/aggregated
 **GET** `/data/aggregated/<filename-or-index>
 Retrieve the aggregated data by filename of index
 
-> **Note:** The aggregated data is also available at the project folder location `<root>/data/aggregated`
+> [!NOTE]
+> The aggregated data is also available at the project folder location `<root>/data/aggregated`
 
 **By index**
 
@@ -227,7 +280,8 @@ curl -X GET http://127.0.0.1:5000/data/aggregated/HHID-State-Age-Value_of_Consum
 **GET** `/data/charts
 Retrieve the list of charts.
 
-> **Note:** The charts are also available at the project folder location `<root>/data/charts`
+> [!NOTE]
+> The charts are also available at the project folder location `<root>/data/charts`
 
 ```bash
 curl -X GET http://127.0.0.1:5000/data/charts
@@ -238,7 +292,8 @@ curl -X GET http://127.0.0.1:5000/data/charts
 **GET** `/data/merged/<filename_or_index>
 Retrieve the specified chart by filename or index.
 
-> **Note:** The charts are also available at the project folder location `<root>/data/charts`
+> [!NOTE]
+> The charts are also available at the project folder location `<root>/data/charts`
 
 ```bash
 curl -X GET http://127.0.0.1:5000/data/charts/1
@@ -271,6 +326,9 @@ Here is an overview of the arguments you can pass
 | `expenditure_file`       | Optional | Name of the expenditure data file.                                                                                                                                                  | `config.RAW_EXPENDITURE_FILE`     |
 | `action`                 | Optional | Action to perform. Options are: `all`, `clean`, `merge`, `aggregate`, `visualize`<br>**Note**: If action is set to `all`, all stages of the pipeline will be executed sequentially. | `all`                             |
 | `aggregation_parameters` | Optional | List of aggregation instructions.<br>                                                                                                                                               | A default list of 5 aggregations. |
+
+> [!NOTE]
+> Aggregation parameters must be in the same format as mentioned under [Aggregation Parameters](#aggregation-parameters)
 
 ### Example Commands
 
