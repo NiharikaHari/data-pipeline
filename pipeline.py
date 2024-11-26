@@ -133,13 +133,13 @@ def run_pipeline(demographic_file=None, expenditure_file=None, action=None, aggr
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Run the data pipeline.")
-    parser.add_argument("--demographic-file", type=str,
+    parser.add_argument("--demographic_file", type=str,
                         default=None, help="Path to the demographic data file.")
-    parser.add_argument("--expenditure-file", type=str,
+    parser.add_argument("--expenditure_file", type=str,
                         default=None, help="Path to the expenditure data file.")
     parser.add_argument("--action", type=str, choices=["clean", "merge", "aggregate", "visualize", "all"],
                         default="all", help="List of action to perform.")
-    parser.add_argument("--aggregation-parameters", type=str,
+    parser.add_argument("--aggregation_parameters", type=str,
                         default=None, help="List of dictonaries containing aggregation parameters.")
     args = parser.parse_args()
 

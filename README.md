@@ -212,15 +212,32 @@ Content-Type: application/json { "demographic_file": "Block_4_Demographic.tsv",
 
 **Using curl**
 
+Bash
+
 ```bash
 curl -X POST http://127.0.0.1:5000/run-pipeline \
 -H "Content-Type: application/json" \
 -d '{
-  "demographic_file": "demographics.tsv",
-  "expenditure_file": "expenditure.tsv",
-  "action": "aggregate",
+  "demographic_file": "Block_4_Demographic.tsv",
+  "expenditure_file": "Block_8_Expenditure.tsv",
+  "action": "all",
   "aggregation_parameters": [
-    {"groupby": ["State", "Sector"], "aggregation": {"Age": "mean", "Value_of_Consumption_Last_30_Day": "sum"}}
+    {"groupby": ["State", "Sector"], "agg_params": {"Age": "mean", "Value_of_Consumption_Last_30_Day": "sum"}}
+  ]
+}'
+```
+
+PWSH
+
+```pwsh
+curl -X POST http://127.0.0.1:5000/run-pipeline `
+-H "Content-Type: application/json" `
+-d '{
+  "demographic_file": "Block_4_Demographic.tsv",
+  "expenditure_file": "Block_8_Expenditure.tsv",
+  "action": "all",
+  "aggregation_parameters": [
+    {"groupby": ["State", "Sector"], "agg_params": {"Age": "mean", "Value_of_Consumption_Last_30_Day": "sum"}}
   ]
 }'
 ```
@@ -297,7 +314,7 @@ curl -X GET http://127.0.0.1:5000/data/aggregated/0
 **By filename**
 
 ```bash
-curl -X GET http://127.0.0.1:5000/data/aggregated/HHID-State-Age-Value_of_Consumption_Last_30_Day.tsv
+curl -X GET http://127.0.0.1:5000/data/aggregated/State-Age-Person_Serial_No.tsv
 ```
 
 <br>
@@ -365,16 +382,16 @@ Here is an overview of the arguments you can pass
 
 ```bash
 python pipeline.py \
-    --demographic-file "Block_4_Demographic.tsv" \
-    --expenditure-file "Block_8_Expenditure.tsv" \
+    --demographic_file "Block_4_Demographic.tsv" \
+    --expenditure_file "Block_8_Expenditure.tsv" \
     --action "all" \
-    --aggregation-parameters '[{"groupby": ["State", "Sector"], "agg_params": {"Age": "mean", "Value_of_Consumption_Last_30_Day": "sum"}}]'
+    --aggregation_parameters '[{"groupby": ["State", "Sector"], "agg_params": {"Age": "mean", "Value_of_Consumption_Last_30_Day": "sum"}}]'
 ```
 
 ```pwsh
 python pipeline.py `
-    --demographic-file "Block_4_Demographic.tsv" `
-    --expenditure-file "Block_8_Expenditure.tsv"
+    --demographic_file "Block_4_Demographic.tsv" `
+    --expenditure_file "Block_8_Expenditure.tsv"
 ```
 
 ```bash
