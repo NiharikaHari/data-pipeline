@@ -235,6 +235,7 @@ Once the pipeline is executed, the results can be found at below locations:
 4. Visualizations - `/data/charts`
 
 These results can also be obtained via GET requests as explained below.
+
 <br>
 
 ### **2. Fetch Cleaned Data**
