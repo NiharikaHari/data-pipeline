@@ -2,7 +2,7 @@ import pandas as pd
 import config
 
 from utils.logger_utils import get_logger, log_error
-from utils.file_utils import load_data, load_merged_data, write_file
+from utils.file_utils import load_dataframe, load_merged_data, write_file
 from utils.dataframe_utils import get_common_columns, get_grouped_dict
 
 
@@ -29,8 +29,8 @@ def merge_data(expenditure_file, demographic_file):
 
         # Load the datasets
         logger.info('Loading cleaned files to be merged')
-        expenditure_df = load_data(expenditure_file)
-        demographic_df = load_data(demographic_file)
+        expenditure_df = load_dataframe(expenditure_file)
+        demographic_df = load_dataframe(demographic_file)
         logger.info('Cleaned files loaded')
 
         # Get common columns between the datasets

@@ -8,7 +8,6 @@ import os
 import argparse
 
 from utils.logger_utils import configure_logger, get_logger, log_error
-from utils.dataframe_utils import count_if_adult
 
 
 def run_pipeline(demographic_file=None, expenditure_file=None, action=None, aggregation_parameters=None):

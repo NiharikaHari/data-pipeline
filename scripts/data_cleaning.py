@@ -1,6 +1,6 @@
 import pandas as pd
 from utils.logger_utils import get_logger, log_error
-from utils.file_utils import load_data, write_file
+from utils.file_utils import load_dataframe, write_file
 from utils.dataframe_utils import *
 
 
@@ -37,7 +37,7 @@ def clean_data(input_file, output_file, critical_columns=None, category_columns=
     try:
         # load data
         logger.info(f'Loading input file: {input_file}')
-        input_df = load_data(filePath=input_file)
+        input_df = load_dataframe(input_file)
         logger.info(f'File loading completed: {input_file}')
 
         # Methods for general cleaning

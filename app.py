@@ -4,7 +4,7 @@ import config
 import traceback
 
 from pipeline import run_pipeline
-from utils.file_utils import load_cleaned_data, load_merged_data, load_data
+from utils.file_utils import load_cleaned_data, load_merged_data, load_dataframe
 
 app = Flask(__name__)
 
@@ -130,7 +130,7 @@ def get_aggregation_by_name(name):
         filepath = os.path.join(config.AGGREGATED_DATA_DIR, name)
 
         if os.path.exists(filepath):
-            data = load_data(filepath).to_dict(orient='records')
+            data = load_dataframe(filepath).to_dict(orient='records')
             return jsonify(data), 200
         else:
             return jsonify({"error": f"Aggregation not found: {name}"}), 404

@@ -1,4 +1,4 @@
-from utils.file_utils import write_file, load_data
+from utils.file_utils import write_file, load_dataframe
 from utils.logger_utils import get_logger, log_error
 from utils.dataframe_utils import flatten_data
 
@@ -35,7 +35,7 @@ def aggregate_data(groupby_cols, agg_params, data_type=None):
     try:
 
         logger.info("Loading merged tsv data...")
-        df = load_data(config.MERGED_TSV_PATH, 'tsv')
+        df = load_dataframe(config.MERGED_TSV_PATH)
         logger.info("Merged tsv data loaded")
 
         if data_type:

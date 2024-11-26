@@ -1,6 +1,7 @@
 import json
 import config
 import pandas as pd
+import os
 
 
 def load_merged_data():
@@ -33,18 +34,14 @@ def load_cleaned_data():
     return cleaned_data
 
 
-def load_data(filePath, fileType='csv', sep='\t'):
+def load_dataframe(filePath):
     """
     Load data file in the specified format.
 
     Parameters
     ----------
     filePath : str
-        The path of the file to be loaded.
-    fileType : str, optional
-        The file type of the file to be loaded.  Supported types are 'csv', 'json', and 'tsv'.
-    sep : str, optional
-        The delimiter used for CSV and TSV files. Defaults to tab (`\t`).
+        The path of the file to be loaded. Currently supported types are ('csv', 'json', 'tsv').
 
     Returns
     -------
@@ -58,17 +55,22 @@ def load_data(filePath, fileType='csv', sep='\t'):
 
     """
 
-    valid_filetypes = ('csv', 'json', 'tsv')
+    fileType = os.path.splitext(filePath)[1]
 
-    if fileType in ('csv', 'tsv'):
-        loaded_data = pd.read_csv(filePath, sep=sep)
+    valid_filetypes = ('.csv', '.json', '.tsv')
+
+    if fileType == '.csv':
+        loaded_data = pd.read_csv(filePath, sep=',')
         return loaded_data
-    elif fileType == 'json':
+    elif fileType == '.tsv':
+        loaded_data = pd.read_csv(filePath, sep='\t')
+        return loaded_data
+    elif fileType == '.json':
         loaded_data = json.load(open(filePath))
         loaded_data = pd.DataFrame(loaded_data['data'])
         return loaded_data
     else:
-        raise ValueError(f'Invalid file type. Allowed types are {
+        raise ValueError(f'Invalid file type {fileType}. Allowed types are {
                          valid_filetypes}')
 
 
@@ -95,5 +97,5 @@ def write_file(input_df, output_file, output_type):
     if output_type == 'tsv':
         input_df.to_csv(output_file, sep="\t", index=False)
     else:
-        raise ValueError(f'Invalid file type. Allowed types are{
+        raise ValueError(f'Invalid file type {output_type}. Allowed types are{
                          valid_filetypes}')
