@@ -38,6 +38,8 @@ Here’s a brief overview of the key files and directories:
 
 ```
 
+---
+
 ## Getting Started
 
 ### Prerequisites
@@ -86,6 +88,8 @@ Start the flask server:
 flask run
 ```
 
+---
+
 ## Using the API Service
 
 ### Base URL
@@ -124,6 +128,8 @@ MERGED_TSV_FILE = "merged_data.tsv"
 ```
 
 3. Alternatively you can specify the raw demographic and expenditure file names while running the pipeline.
+
+---
 
 Once the flask app is running, you can use the API with tools like **Postman**, **cURL**, or Python scripts. Below are examples for each endpoint:
 
@@ -198,16 +204,10 @@ The field `aggregation_parameters` is expected to be a _list of dictionaries_, w
 
 **Using Postman or VSCode REST Client Extension**
 
-```json
-# POST method to trigger pipeline
-
-POST http://127.0.0.1:5000/run-pipeline
-Content-Type: application/json
-
-{
-  "demographic_file": "Block_4_Demographic.tsv",
-  "expenditure_file": "Block_8_Expenditure.tsv"
-}
+```html
+# POST method to trigger pipeline POST http://127.0.0.1:5000/run-pipeline
+Content-Type: application/json { "demographic_file": "Block_4_Demographic.tsv",
+"expenditure_file": "Block_8_Expenditure.tsv" }
 ```
 
 **Using curl**
@@ -236,6 +236,8 @@ Once the pipeline is executed, the results can be found at below locations:
 
 These results can also be obtained via GET requests as explained below.
 
+---
+
 ### **2. Fetch Cleaned Data**
 
 **GET** `/data/cleaned`
@@ -247,6 +249,8 @@ Retrieve cleaned demographic and expenditure data.
 ```bash
 curl -X GET http://127.0.0.1:5000/data/cleaned
 ```
+
+---
 
 ### **3. Fetch Merged Data**
 
@@ -260,6 +264,8 @@ Retrieve the merged data.
 curl -X GET http://127.0.0.1:5000/data/merged
 ```
 
+---
+
 ### **4. Fetch Aggregated Data List**
 
 **GET** `/data/aggregated
@@ -271,6 +277,8 @@ Retrieve the list of aggregated data files
 ```bash
 curl -X GET http://127.0.0.1:5000/data/aggregated
 ```
+
+---
 
 ### **5. Fetch Aggregated Data by Filename or Index**
 
@@ -292,6 +300,8 @@ curl -X GET http://127.0.0.1:5000/data/aggregated/0
 curl -X GET http://127.0.0.1:5000/data/aggregated/HHID-State-Age-Value_of_Consumption_Last_30_Day.tsv
 ```
 
+---
+
 ### **6. Fetch List of Visualization Charts**
 
 **GET** `/data/charts
@@ -303,6 +313,8 @@ Retrieve the list of charts.
 ```bash
 curl -X GET http://127.0.0.1:5000/data/charts
 ```
+
+---
 
 ### **7. Fetch Visualization Charts by Filename or Index**
 
@@ -319,6 +331,8 @@ curl -X GET http://127.0.0.1:5000/data/charts/1
 ```bash
 curl -X GET http://127.0.0.1:5000/data/charts/grouped.png
 ```
+
+---
 
 ## Running the Pipeline via Command Line
 
