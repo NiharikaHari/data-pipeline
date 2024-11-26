@@ -51,7 +51,7 @@ def plot_stacked_bar_chart(expenditure_df):
 
     # Layout adjustment
     plt.tight_layout()
-    plt.savefig(config.CHARTS_DIR+'/stacked.png')
+    plt.savefig(config.CHARTS_DIR+'/statewise-expenditure-stacked-bar.png')
     plt.close(fig)
 
 
@@ -78,7 +78,8 @@ def plot_grouped_bar_chart(demographic_df):
     ax.legend(title="Genders", bbox_to_anchor=(1.05, 1), loc='upper left')
     ax.set_xlabel("No of Individuals", fontsize=12)
     ax.set_ylabel("Education Level", fontsize=12)
-    plt.savefig(config.CHARTS_DIR+'/grouped.png', bbox_inches='tight')
+    plt.savefig(config.CHARTS_DIR +
+                '/genderwise-educationlevel-grouped-bar.png', bbox_inches='tight')
     plt.close(fig)
 
 
@@ -116,7 +117,7 @@ def plot_pie_charts(demographic_df):
         # Set title and layout
         plt.title('Registered in MGNREG Jobcard - '+state, wrap=True)
         plt.tight_layout()
-        plt.savefig(config.CHARTS_DIR+'/pie1_'+state+'.png')
+        plt.savefig(config.CHARTS_DIR+'/MGNREG-registered-'+state+'-pie.png')
         plt.close()
 
     # Calculate plot values for MGNREG_worked
@@ -144,7 +145,7 @@ def plot_pie_charts(demographic_df):
         plt.legend(loc='lower center', labels=chart_labels,
                    bbox_to_anchor=(0.5, -0.2))
         plt.tight_layout(pad=0.1)
-        plt.savefig(config.CHARTS_DIR+'/pie2_'+state+'.png')
+        plt.savefig(config.CHARTS_DIR+'/MGNREG-worked-'+state+'-pie.png')
         plt.close()
 
 
@@ -181,7 +182,7 @@ def plot_stacked_histogram(demographic_df):
     plt.xticks(rotation=0)
     plt.legend(title='Literacy Level')
     plt.tight_layout()
-    plt.savefig(config.CHARTS_DIR+'/histogram.png')
+    plt.savefig(config.CHARTS_DIR+'/age-educationlevel-stacked-histogram.png')
     plt.close()
 
 
@@ -216,5 +217,5 @@ def plot_heatmap(expenditure_df):
     plt.xlabel('State', fontsize=12)
     plt.ylabel('Category', fontsize=12)
     plt.tight_layout()
-    plt.savefig(config.CHARTS_DIR+'/heatmap.png')
+    plt.savefig(config.CHARTS_DIR+'/statewise-expenditure-heatmap.png')
     plt.close()

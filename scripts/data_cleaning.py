@@ -4,7 +4,7 @@ from utils.file_utils import load_dataframe, write_file
 from utils.dataframe_utils import *
 
 
-def clean_data(input_file, output_file, critical_columns=None, category_columns=None, numeric_columns=None):
+def clean_data(input_file, output_file, critical_columns=None, category_columns=None, numeric_columns=None, irrelevant_columns=None):
     """
     Cleans data file and exports it.
 
@@ -20,6 +20,8 @@ def clean_data(input_file, output_file, critical_columns=None, category_columns=
         List of columns that have categorical values.
     numeric_columns : list (default=None)
         List of columns that have numerical values.
+    irrelevant_columns : list (default=None)
+        List of columns that have irrelevant values.
 
     """
 
@@ -33,6 +35,8 @@ def clean_data(input_file, output_file, critical_columns=None, category_columns=
                                             'MGNREG_jobcard', 'MGNREG_work', 'General_Education']
     numeric_columns = numeric_columns or ['Age', 'Value_of_Consumption_Last_30_Day',
                                           'Value_of_Consumption_Last_30_Day']
+    irrelevant_columns = irrelevant_columns or [
+        'Blank', 'Spl_characters_for_OK_stamp']
 
     try:
         # load data
@@ -42,6 +46,7 @@ def clean_data(input_file, output_file, critical_columns=None, category_columns=
 
         # Methods for general cleaning
         input_df = strip_strings(input_df)
+        drop_columns(input_df, irrelevant_columns)
         drop_empty_columns(input_df)
         drop_na_from_columns(input_df, critical_columns, how='any')
         fill_na_with_unknown(input_df, category_columns)

@@ -9,6 +9,15 @@ def flatten_data(data, path, meta):
     return df
 
 
+def drop_columns(df, cols):
+    """
+    Drop specified columns from dataframe.
+    """
+    for col in cols:
+        if col in df.columns:
+            df.drop(columns=col, inplace=True)
+
+
 def drop_unknown(df):
     """
     Drop all rows with 'Unknown' value from dataframe.

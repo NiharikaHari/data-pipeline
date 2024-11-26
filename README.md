@@ -112,7 +112,7 @@ FLASK_DEBUG = True
 
 ### Configure File Names
 
-1. Place your expenditure and demographic raw data files in the folder `/data/raw`.
+1. Place your expenditure and demographic raw data files in the folder `/data/raw`. These must be in TSV or CSV format.
 2. You may update `config.py` file with the appropriate filenames in the fields below:
 
 ```python
@@ -246,10 +246,26 @@ curl -X POST http://127.0.0.1:5000/run-pipeline `
 
 Once the pipeline is executed, the results can be found at below locations:
 
-1. Cleaned data - `/data/cleaned`
-2. Merged data - `/data/merged`
-3. Aggregated data - `/data/aggregated`
-4. Visualizations - `/data/charts`
+1. Cleaned data - `/data/cleaned` (Output file format: TSV)
+2. Merged data - `/data/merged` (Output file format: TSV, JSON)
+3. Aggregated data - `/data/aggregated` (Output file format: TSV)
+4. Visualizations - `/data/charts` (Output file format: PNG)
+
+By default the pipeline generates the following summary reports:
+
+1. Average age and number of individuals grouped by state
+2. Average age and number of individuals grouped by Sex, Education Level, and Status of Current Attendance
+3. Average expenditure in last 30 days grouped by state and District
+4. Count of people registered in MGNREG grouped by State
+5. Count of unmarried people who are adults grouped by State, District, HHID
+
+The data visualizations generated are:
+
+1. Stacked bar chart representing statewise average expenditure by item category
+2. Grouped bar chart representing genderwise Education Level
+3. Pie charts representing statewise MGNREG data
+4. Stacked histogram representing age distribution and education level.
+5. Heatmap representing statewise expenditure per item category.
 
 These results can also be obtained via GET requests as explained below.
 
@@ -346,7 +362,7 @@ curl -X GET http://127.0.0.1:5000/data/charts/1
 ```
 
 ```bash
-curl -X GET http://127.0.0.1:5000/data/charts/grouped.png
+curl -X GET http://127.0.0.1:5000/data/charts/statewise-expenditure-heatmap.png
 ```
 
 <br>
