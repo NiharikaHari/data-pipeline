@@ -1,6 +1,14 @@
 # POST method to trigger pipeline
 
 POST http://127.0.0.1:5000/run-pipeline
+
+###
+
+
+# POST method to trigger pipeline with parameters
+
+
+POST http://127.0.0.1:5000/run-pipeline
 Content-Type: application/json
 
 {

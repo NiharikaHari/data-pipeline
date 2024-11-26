@@ -68,7 +68,7 @@ def run_pipeline(demographic_file=None, expenditure_file=None, action=None, aggr
         {
             # Count of unmarried people who are adults grouped by State, Distric, HHID
             'groupby': ['State', 'District_Code', 'HHID', 'Marital_Status'],
-            'agg_params': {"Age": lambda x: count_if_adult(x)}
+            'agg_params': {"Age": lambda x: x[x >= 18].count()}
         }
     ]
 
