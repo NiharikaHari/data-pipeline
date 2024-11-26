@@ -365,16 +365,16 @@ Here is an overview of the arguments you can pass
 
 ```bash
 python pipeline.py \
-    --demographic_file "Block_4_Demographics.tsv" \
-    --expenditure_file "Block_8_Expenditure.tsv" \
+    --demographic-file "Block_4_Demographic.tsv" \
+    --expenditure-file "Block_8_Expenditure.tsv" \
     --action "all" \
-    --aggregation_parameters '[{"groupby": ["State", "Sector"], "aggregation": {"Age": "mean", "Value_of_Consumption_Last_30_Day": "sum"}}]'
+    --aggregation-parameters '[{"groupby": ["State", "Sector"], "agg_params": {"Age": "mean", "Value_of_Consumption_Last_30_Day": "sum"}}]'
 ```
 
-```bash
-python pipeline.py \
-    --demographic_file "Block_4_Demographics.tsv" \
-    --expenditure_file "Block_8_Expenditure.tsv" \
+```pwsh
+python pipeline.py `
+    --demographic-file "Block_4_Demographic.tsv" `
+    --expenditure-file "Block_8_Expenditure.tsv"
 ```
 
 ```bash
