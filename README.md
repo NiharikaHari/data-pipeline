@@ -38,8 +38,6 @@ Here’s a brief overview of the key files and directories:
 
 ```
 
----
-
 ## Getting Started
 
 ### Prerequisites
@@ -88,7 +86,7 @@ Start the flask server:
 flask run
 ```
 
----
+<br>
 
 ## Using the API Service
 
@@ -128,6 +126,8 @@ MERGED_TSV_FILE = "merged_data.tsv"
 ```
 
 3. Alternatively you can specify the raw demographic and expenditure file names while running the pipeline.
+
+<br>
 
 ---
 
@@ -235,8 +235,7 @@ Once the pipeline is executed, the results can be found at below locations:
 4. Visualizations - `/data/charts`
 
 These results can also be obtained via GET requests as explained below.
-
----
+<br>
 
 ### **2. Fetch Cleaned Data**
 
@@ -250,7 +249,7 @@ Retrieve cleaned demographic and expenditure data.
 curl -X GET http://127.0.0.1:5000/data/cleaned
 ```
 
----
+<br>
 
 ### **3. Fetch Merged Data**
 
@@ -264,7 +263,7 @@ Retrieve the merged data.
 curl -X GET http://127.0.0.1:5000/data/merged
 ```
 
----
+<br>
 
 ### **4. Fetch Aggregated Data List**
 
@@ -278,7 +277,7 @@ Retrieve the list of aggregated data files
 curl -X GET http://127.0.0.1:5000/data/aggregated
 ```
 
----
+<br>
 
 ### **5. Fetch Aggregated Data by Filename or Index**
 
@@ -300,7 +299,7 @@ curl -X GET http://127.0.0.1:5000/data/aggregated/0
 curl -X GET http://127.0.0.1:5000/data/aggregated/HHID-State-Age-Value_of_Consumption_Last_30_Day.tsv
 ```
 
----
+<br>
 
 ### **6. Fetch List of Visualization Charts**
 
@@ -314,7 +313,7 @@ Retrieve the list of charts.
 curl -X GET http://127.0.0.1:5000/data/charts
 ```
 
----
+<br>
 
 ### **7. Fetch Visualization Charts by Filename or Index**
 
@@ -332,7 +331,7 @@ curl -X GET http://127.0.0.1:5000/data/charts/1
 curl -X GET http://127.0.0.1:5000/data/charts/grouped.png
 ```
 
----
+<br>
 
 ## Running the Pipeline via Command Line
 
