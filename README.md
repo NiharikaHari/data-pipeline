@@ -287,7 +287,7 @@ curl -X GET http://127.0.0.1:5000/data/cleaned
 
 ### **3. Fetch Merged Data**
 
-**GET** `/data/merged
+**GET** `/data/merged`
 Retrieve the merged data.
 
 > [!NOTE]
@@ -301,7 +301,7 @@ curl -X GET http://127.0.0.1:5000/data/merged
 
 ### **4. Fetch Aggregated Data List**
 
-**GET** `/data/aggregated
+**GET** `/data/aggregated`
 Retrieve the list of aggregated data files
 
 > [!NOTE]
@@ -315,7 +315,7 @@ curl -X GET http://127.0.0.1:5000/data/aggregated
 
 ### **5. Fetch Aggregated Data by Filename or Index**
 
-**GET** `/data/aggregated/<filename-or-index>
+**GET** `/data/aggregated/<filename-or-index>`
 Retrieve the aggregated data by filename of index
 
 > [!NOTE]
@@ -337,7 +337,7 @@ curl -X GET http://127.0.0.1:5000/data/aggregated/State-Age-Person_Serial_No.tsv
 
 ### **6. Fetch List of Visualization Charts**
 
-**GET** `/data/charts
+**GET** `/data/charts`
 Retrieve the list of charts.
 
 > [!NOTE]
@@ -351,7 +351,7 @@ curl -X GET http://127.0.0.1:5000/data/charts
 
 ### **7. Fetch Visualization Charts by Filename or Index**
 
-**GET** `/data/merged/<filename_or_index>
+**GET** `/data/merged/<filename_or_index>`
 Retrieve the specified chart by filename or index.
 
 > [!NOTE]
